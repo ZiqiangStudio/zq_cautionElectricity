@@ -15,15 +15,27 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from items import views as items
 from users import views as users
 
-
 urlpatterns = [
-path('admin/', admin.site.urls),
-path('index/users',users.index),
-path('index/items', items.index),
-
+    path('admin/', admin.site.urls),
+    path('index/users', users.index),
+    path('index/items', items.index),
+    # 获取单个项目
+    re_path('m1/4020303-0-default/cautionelectricity/(\d+)/items', users.getItem),
+    # 获取所有项目
+    re_path('m1/4020303-0-default/cautionelectricity/(\d+)/allItems', users.getItems),
+    # 获取电量
+    re_path('m1/4020303-0-default//cautionelectricity/(\d+)/quantity', users.getElectricity),
+    # 获取所有已完成项目
+    # 获取总结
+    # 修改指定项目
+    # 删除指定项目
+    # 新建项目
+    re_path(r'm1/4020303-0-default/cautionelectricity/(\d+)/items/create', items.createItem),
+    # 新建用户
+    path('m1/4020303-0-default/cautionelectricity/createuser', users.createUser)
 
 ]
